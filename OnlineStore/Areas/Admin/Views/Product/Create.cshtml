@@ -1,0 +1,56 @@
+﻿@model Product
+
+<div class="card shadow border mt-4">
+	<div class="card-header bg-primary m-lg-0 py-3">
+		<div class="row">
+			<div class="col-12 text-center">
+				<h2 class="text-white py-2">Create Product</h2>
+			</div>
+		</div>
+	</div>
+	<div class="card-body p-4">
+		<form method="post" class="row">
+			<div class="p-3">
+
+				<div class="mb-3 row p-1">
+					<label asp-for="Title">Product Name:</label>
+					<input asp-for="Title" type="text" class="form-control" /><br />
+					<span asp-validation-for="Title" class="text-danger"></span>
+
+				</div>
+				<div class="mb-3 row p-1">
+					<label asp-for="Brand">Brand Name:</label>
+					<input asp-for="Brand" type="text" class="form-control" /><br />
+					<span asp-validation-for="Brand" class="text-danger"></span>
+				</div>
+				<div class="mb-3 row p-1">
+					<label asp-for="Description">Product Description:</label>
+					<textarea asp-for="Description" type="text" class="form-control"></textarea><br />
+					<span asp-validation-for="Description" class="text-danger"></span>
+				</div>
+				<div class="mb-3 row p-1">
+					<label asp-for="Price">Price:</label>
+					<input asp-for="Price" placeholder="Amount (in $)" type="number" class="form-control" step="0.01" min="0" /><br />
+					<span asp-validation-for="Price" class="text-danger"></span>
+				</div>
+				<div class="row">
+					<div class="col-6">
+						<button type="submit" class="btn btn-primary form-control">Create</button>
+					</div>
+					<div class="col-6">
+						<a asp-controller="Product" asp-action="Index" class="btn btn-secondary form-control">
+							Back to list
+						</a>
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>
+
+@* this is done to add the client side validation to the create category input field *@
+@section Scripts{
+	@{
+		<partial name="_ValidationScriptsPartial"/>
+	}
+}

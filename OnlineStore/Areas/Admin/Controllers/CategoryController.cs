@@ -3,21 +3,22 @@ using OnlineStore.DataAcess.Data;
 using OnlineStore.DataAcess.Repository;
 using OnlineStore.DataAcess.Repository.IRepository;
 using OnlineStore.Models;
-namespace OnlineStore.Controllers
+namespace OnlineStore.Areas.Admin.Controllers
 {
+    [Area("Admin")]
     public class CategoryController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
         public CategoryController(IUnitOfWork unitOfWork)
         {
-           _unitOfWork = unitOfWork;
+            _unitOfWork = unitOfWork;
         }
-     //this method reterive the data of category table from the database.
-     //ToList() bring the record of the data from the category table and make list.
-     //this index action shows the list of category List
+        //this method reterive the data of category table from the database.
+        //ToList() bring the record of the data from the category table and make list.
+        //this index action shows the list of category List
         public IActionResult Index()
         {
-            List<Category> objCategoryList= _unitOfWork.Category.GetAll().ToList();
+            List<Category> objCategoryList = _unitOfWork.Category.GetAll().ToList();
             return View(objCategoryList);
         }
         public IActionResult Create()
@@ -31,7 +32,7 @@ namespace OnlineStore.Controllers
             //This checks if CategoryName and DisplayOrder are same or not.....
             if (obj.CategoryName == obj.DisplayOrder.ToString())
             {
-                ModelState.AddModelError("CategoryName","Name and DisplayOrder cannot be same");
+                ModelState.AddModelError("CategoryName", "Name and DisplayOrder cannot be same");
             }
             //this checks if create the input field is valid or not....
             //if valid then only save the data to the category list...
@@ -48,12 +49,12 @@ namespace OnlineStore.Controllers
         public IActionResult Edit(int? id)
         {
             //this condition check if the id isvalid or not....
-            if(id==null || id == 0)
+            if (id == null || id == 0)
             {
                 return NotFound();
             }
             //this reterive the category id from the database
-            Category? categoryFromDb = _unitOfWork.Category.Get(u=>u.Id==id);
+            Category? categoryFromDb = _unitOfWork.Category.Get(u => u.Id == id);
             if (categoryFromDb == null)
             {
                 return NotFound();
@@ -75,7 +76,7 @@ namespace OnlineStore.Controllers
             }
             return View();
         }
-       
+
         public IActionResult Delete(int? id)
         {
             //this condition check if the id isvalid or not....
@@ -92,7 +93,7 @@ namespace OnlineStore.Controllers
             return View(categoryFromDb);
         }
 
-        [HttpPost,ActionName("Delete") ]
+        [HttpPost, ActionName("Delete")]
 
         public IActionResult DeletePost(int? id)
         {
@@ -106,8 +107,6 @@ namespace OnlineStore.Controllers
             _unitOfWork.Save();
             TempData["success"] = "Category Deleted sucessfully";
             return RedirectToAction("Index");
-            
-            
         }
     }
 }
