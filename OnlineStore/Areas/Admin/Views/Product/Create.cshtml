@@ -35,7 +35,7 @@
 				</div>
 				<div class="row">
 					<div class="col-6">
-						<button type="submit" class="btn btn-primary form-control">Create</button>
+						<button asp-controller="Product" asp-action="Index" type="submit" class="btn btn-primary form-control">Create</button>
 					</div>
 					<div class="col-6">
 						<a asp-controller="Product" asp-action="Index" class="btn btn-secondary form-control">
@@ -49,8 +49,8 @@
 </div>
 
 @* this is done to add the client side validation to the create category input field *@
-@section Scripts{
+@section Scripts {
 	@{
-		<partial name="_ValidationScriptsPartial"/>
+		<partial name="_ValidationScriptsPartial" />
 	}
 }

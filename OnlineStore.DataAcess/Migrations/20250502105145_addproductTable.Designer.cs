@@ -11,8 +11,8 @@ using OnlineStore.DataAcess.Data;
 namespace OnlineStore.DataAcess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250430114918_addProductToDb")]
-    partial class addProductToDb
+    [Migration("20250502105145_addproductTable")]
+    partial class addproductTable
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

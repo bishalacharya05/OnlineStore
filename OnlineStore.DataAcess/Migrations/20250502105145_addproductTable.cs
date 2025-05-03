@@ -7,7 +7,7 @@
 namespace OnlineStore.DataAcess.Migrations
 {
     /// <inheritdoc />
-    public partial class addProductToDb : Migration
+    public partial class addproductTable : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

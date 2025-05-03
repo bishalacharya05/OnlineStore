@@ -80,12 +80,12 @@ namespace OnlineStore.Areas.Admin.Controllers
                 return NotFound();
             }
             //this delete/remove the category data from the database base on their id....
-            Product? categoryFromDb = _unitOfWork.Product.Get(u => u.ProductId == id);
-            if (categoryFromDb == null)
+            Product? productFromDb = _unitOfWork.Product.Get(u => u.ProductId == id);
+            if (productFromDb == null)
             {
                 return NotFound();
             }
-            return View(categoryFromDb);
+            return View(productFromDb);
         }
 
         [HttpPost, ActionName("Delete")]

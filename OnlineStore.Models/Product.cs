@@ -23,9 +23,10 @@ namespace OnlineStore.Models
         [DataType(DataType.Currency)]
         public decimal Price { get; set; }
 
-        public int CategoryId {  get; set; }
+        public int CategoryId { get; set; }
 
         [ForeignKey("CategoryId")]
         public Category Category { get; set; }
+        public string ImageUrl {  get; set; }
     }
 }

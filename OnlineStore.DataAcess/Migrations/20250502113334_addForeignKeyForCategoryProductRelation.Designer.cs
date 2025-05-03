@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using OnlineStore.DataAcess.Data;
 
@@ -10,9 +11,11 @@ using OnlineStore.DataAcess.Data;
 namespace OnlineStore.DataAcess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250502113334_addForeignKeyForCategoryProductRelation")]
+    partial class addForeignKeyForCategoryProductRelation
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -81,10 +84,6 @@ namespace OnlineStore.DataAcess.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("ImageUrl")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
 
@@ -105,7 +104,6 @@ namespace OnlineStore.DataAcess.Migrations
                             Brand = "Samsung",
                             CategoryId = 2,
                             Description = "Samsung Galaxy S21 with 8GB RAM and 128GB Storage.",
-                            ImageUrl = "",
                             Price = 699.99m,
                             Title = "Samsung Galaxy S21"
                         },
@@ -115,7 +113,6 @@ namespace OnlineStore.DataAcess.Migrations
                             Brand = "Apple",
                             CategoryId = 2,
                             Description = "iPhone 13 with A15 Bionic chip and 128GB Storage.",
-                            ImageUrl = "",
                             Price = 799.00m,
                             Title = "Apple iPhone 13"
                         },
@@ -125,7 +122,6 @@ namespace OnlineStore.DataAcess.Migrations
                             Brand = "Sony",
                             CategoryId = 1,
                             Description = "Noise-canceling wireless headphones with 30 hours battery life.",
-                            ImageUrl = "",
                             Price = 348.00m,
                             Title = "Sony WH-1000XM4 Headphones"
                         });
