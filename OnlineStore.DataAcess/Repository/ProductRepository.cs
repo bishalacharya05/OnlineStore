@@ -21,6 +21,19 @@ namespace OnlineStore.DataAcess.Repository
         public void Update(Product obj)
         {
             _db.Products.Update(obj);
+            var objFromDb = _db.Products.FirstOrDefault(u => u.ProductId == obj.ProductId);
+            if (objFromDb != null)
+            {
+                objFromDb.Title = obj.Title;
+                objFromDb.Brand = obj.Brand;
+                objFromDb.Description = obj.Description;
+                objFromDb.Price = obj.Price;
+                objFromDb.CategoryId = obj.CategoryId;
+                if (obj.ImageUrl != null)
+                {
+                    objFromDb.ImageUrl = obj.ImageUrl;
+                }
+            }
         }
     }
 }

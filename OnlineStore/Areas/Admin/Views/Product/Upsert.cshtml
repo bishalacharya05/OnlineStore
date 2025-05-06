@@ -1,0 +1,108 @@
+﻿@model ProductViewModel
+
+<div class="card shadow border mt-4">
+	<div class="card-header bg-primary m-lg-0 py-3">
+		<div class="row">
+			<div class="col-12 text-center">
+				<h2 class="text-white py-2">@(Model.Product.ProductId != 0 ? "Update" : "Create")Product</h2>
+			</div>
+		</div>
+	</div>
+	<div class="card-body p-4">
+		<form method="post" class="row" enctype="multipart/form-data">
+			<input asp-for="Product.ProductId" hidden />
+			<input asp-for="Product.ImageUrl" hidden />
+			<div class="row">
+				<div class="col-10">
+					<div class=" border p-3">
+
+						<div class="mb-3 row p-1">
+							<label asp-for="Product.Title">Product Name:</label>
+							<input asp-for="Product.Title" type="text" class="form-control" /><br />
+							<span asp-validation-for="Product.Title" class="text-danger"></span>
+
+						</div>
+						<div class="mb-3 row p-1">
+							<label asp-for="Product.Brand">Brand Name:</label>
+							<input asp-for="Product.Brand" type="text" class="form-control" /><br />
+							<span asp-validation-for="Product.Brand" class="text-danger"></span>
+						</div>
+						<div class="mb-3 row p-1">
+							<label asp-for="Product.Description">Product Description:</label>
+							<textarea asp-for="Product.Description" type="text" class="form-control"></textarea><br />
+							<span asp-validation-for="Product.Description" class="text-danger"></span>
+						</div>
+						<div class="mb-3 row p-1">
+							<label asp-for="Product.Price">Price:</label>
+							<input asp-for="Product.Price" placeholder="Amount (in $)" type="number" class="form-control" min="0" /><br />
+							<span asp-validation-for="Product.Price" class="text-danger"></span>
+						</div>
+						<div class="mb-3 row p-1">
+							<label asp-for="Product.CategoryId">category</label>
+							<select asp-for="Product.CategoryId" asp-items="@Model.CategoryList" class="form-select">
+								<option disabled selected>--Select Category</option>
+							</select><br />
+							<span asp-validation-for="Product.CategoryId" class="text-danger"></span>
+						</div>
+						<div class="mb-3 row p-1">
+							<label asp-for="Product.ImageUrl">ImageUrl</label>
+							<input asp-for="Product.ImageUrl" type="file" name="file" class="form-control" /><br />
+
+						</div>
+
+						<div class="row">
+							<div class="col-6">
+								@if (Model.Product.ProductId != 0)
+								{
+									<button type="submit" class="btn btn-primary form-control">Update</button>
+								}
+								else
+								{
+									<button type="submit" class="btn btn-primary form-control">Create</button>
+								}
+							</div>
+							<div class="col-6">
+								<a asp-controller="Product" asp-action="Index" class="btn btn-secondary form-control">
+									Back to list
+								</a>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="col-2">
+					<img src="@Model.Product.ImageUrl" width="100%"
+					style="border-radius:5px; border:1px solid #bbb9b9" />
+				</div>
+			</div>
+
+		</form>
+	</div>
+</div>
+
+@* this is done to add the client side validation to the create category input field *@
+@section Scripts {
+	<script>
+		tinymce.init({
+		  selector: 'textarea',
+		  plugins: [
+			// Core editing features
+			'anchor', 'autolink', 'charmap', 'codesample', 'emoticons',  'link', 'media',  'table', 'visualblocks', 'wordcount',
+			// Your account includes a free trial of TinyMCE premium features
+			// Try the most popular premium features until May 20, 2025:
+			 'mediaembed', 'casechange', 'formatpainter', 'pageembed', 'a11ychecker', 'tinymcespellchecker', 'permanentpen', 'powerpaste', 'advtable', 'advcode', 'editimage', 'advtemplate', 'ai', 'mentions', 'tinycomments', 'tableofcontents', 'footnotes', 'mergetags', 'autocorrect', 'typography', 'inlinecss', 'markdown','importword', 'exportword', 'exportpdf'
+		  ],
+		  toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | addcomment showcomments | spellcheckdialog a11ycheck typography | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
+		  tinycomments_mode: 'embedded',
+		  tinycomments_author: 'Author name',
+		  mergetags_list: [
+			{ value: 'First.Name', title: 'First Name' },
+			{ value: 'Email', title: 'Email' },
+		  ],
+		  ai_request: (request, respondWith) => respondWith.string(() => Promise.reject('See docs to implement AI Assistant')),
+		});
+	</script>
+	@{
+		<partial name="_ValidationScriptsPartial" />
+	}
+}

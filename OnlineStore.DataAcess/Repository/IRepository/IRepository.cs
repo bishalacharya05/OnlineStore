@@ -10,11 +10,11 @@ namespace OnlineStore.DataAcess.Repository.IRepository
     public interface IRepository<T> where T : class
     {
         //Here T is the category
-        IEnumerable<T> GetAll();
-        T Get(Expression<Func<T,bool>> filter);
+        IEnumerable<T> GetAll(string? includProperties = null);
+        T Get(Expression<Func<T,bool>> filter, string? includProperties = null);
         void Add(T entity);
         void Remove(T entity);
-        void RemoveRange(IEnumerable<T> entities);
+        void RemoveRange(IEnumerable<T> entity);
 
     }
 }
