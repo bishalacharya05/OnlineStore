@@ -29,7 +29,7 @@ namespace OnlineStore.Areas.Admin.Controllers
             return View(objProductList);
         }
         //In this we are combining the update or edit method and naming as Upsert
-        public IActionResult Upsert(int? id)
+        public IActionResult Upsert(int? productId)
         {
 
 
@@ -46,14 +46,14 @@ namespace OnlineStore.Areas.Admin.Controllers
 
             };
             //this is to create the product because while creatint the product we generate the new id and is id null at that time
-            if (id == null || id == 0)
+            if (productId == null || productId == 0)
             {
                 return View(productViewModel);
             }
             //this is to update or edit . We can to select any product to update so the id must not be null here
             else
             {
-                productViewModel.Product = _unitOfWork.Product.Get(u => u.ProductId == id);
+                productViewModel.Product = _unitOfWork.Product.Get(u => u.ProductId == productId);
                 return View(productViewModel);
             }
         }
@@ -120,37 +120,40 @@ namespace OnlineStore.Areas.Admin.Controllers
 
             return View(productViewModel);
         }
+        #region API CALLS
 
-        public IActionResult Delete(int? id)
+        [HttpGet]
+        public IActionResult GetAll()
         {
-            //this condition check if the id isvalid or not....
-            if (id == null || id == 0)
-            {
-                return NotFound();
-            }
-            //this delete/remove the category data from the database base on their id....
-            Product? productFromDb = _unitOfWork.Product.Get(u => u.ProductId == id);
-            if (productFromDb == null)
-            {
-                return NotFound();
-            }
-            return View(productFromDb);
+            List<Product> objProductList = _unitOfWork.Product.GetAll(includProperties: "Category").ToList();
+            return Json(new {data=objProductList});
         }
 
-        [HttpPost, ActionName("Delete")]
-
-        public IActionResult DeletePost(int? id)
+        [HttpDelete]
+        public IActionResult Delete(int? productId)
         {
-            Product? obj = _unitOfWork.Product.Get(u => u.ProductId == id);
-            if (obj == null)
+            var productToBeDeleted = _unitOfWork.Product.Get(u => u.ProductId == productId);
+            if (productToBeDeleted == null)
             {
-                return NotFound();
+                return Json(new { success = false, message = "Error while deleting" });
             }
 
-            _unitOfWork.Product.Remove(obj);
+            var oldImagePath = Path.Combine(_webHostEnvironment.WebRootPath,
+                productToBeDeleted.ImageUrl.TrimStart('\\'));
+
+            if (System.IO.File.Exists(oldImagePath))
+            {
+                System.IO.File.Delete(oldImagePath);
+            }
+
+            _unitOfWork.Product.Remove(productToBeDeleted);
             _unitOfWork.Save();
-            TempData["success"] = "Product Deleted sucessfully";
-            return RedirectToAction("Index");
+
+
+            return Json(new { success = true, message = "Deleted successfully" });
         }
+
+
+        #endregion
     }
 }
